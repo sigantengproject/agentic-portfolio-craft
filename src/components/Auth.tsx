@@ -90,8 +90,15 @@ export const Auth = () => {
             required
           />
         </div>
-        <Button type="submit" className="w-full" disabled={loading}>
-          {loading ? 'Signing in...' : 'Sign In'}
+        <Button type="submit" className="w-full bg-gradient-primary shadow-primary hover:shadow-accent transition-all duration-300 border-0" disabled={loading}>
+          {loading ? (
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin"></div>
+              Signing in...
+            </div>
+          ) : (
+            'Sign In'
+          )}
         </Button>
       </form>
     );
@@ -143,32 +150,52 @@ export const Auth = () => {
             minLength={6}
           />
         </div>
-        <Button type="submit" className="w-full" disabled={loading}>
-          {loading ? 'Creating account...' : 'Sign Up'}
+        <Button type="submit" className="w-full bg-gradient-primary shadow-primary hover:shadow-accent transition-all duration-300 border-0" disabled={loading}>
+          {loading ? (
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin"></div>
+              Creating account...
+            </div>
+          ) : (
+            'Sign Up'
+          )}
         </Button>
       </form>
     );
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold">AI Portfolio Builder</CardTitle>
-          <CardDescription>
+    <div className="min-h-screen flex items-center justify-center bg-background relative overflow-hidden">
+      {/* Animated background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-primary/10"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,hsl(262_83%_58%/0.1),transparent_70%)]"></div>
+      
+      {/* Floating orbs */}
+      <div className="absolute top-20 left-20 w-32 h-32 bg-primary/20 rounded-full blur-xl animate-float"></div>
+      <div className="absolute bottom-20 right-20 w-24 h-24 bg-accent/20 rounded-full blur-xl animate-float" style={{animationDelay: '1s'}}></div>
+      
+      <Card className="w-full max-w-md glass shadow-card border-0 backdrop-blur-xl relative z-10 animate-slide-up">
+        <CardHeader className="text-center space-y-4">
+          <div className="mx-auto w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center shadow-primary animate-glow">
+            <div className="text-2xl font-bold text-primary-foreground">✨</div>
+          </div>
+          <CardTitle className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+            AI Portfolio Builder
+          </CardTitle>
+          <CardDescription className="text-lg text-muted-foreground">
             Create stunning portfolios powered by AI
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="signin" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="signin">Sign In</TabsTrigger>
-              <TabsTrigger value="signup">Sign Up</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-2 bg-secondary/50 border border-border/50">
+              <TabsTrigger value="signin" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Sign In</TabsTrigger>
+              <TabsTrigger value="signup" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Sign Up</TabsTrigger>
             </TabsList>
-            <TabsContent value="signin">
+            <TabsContent value="signin" className="mt-6">
               <SignInForm />
             </TabsContent>
-            <TabsContent value="signup">
+            <TabsContent value="signup" className="mt-6">
               <SignUpForm />
             </TabsContent>
           </Tabs>

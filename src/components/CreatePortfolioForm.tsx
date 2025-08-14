@@ -129,9 +129,9 @@ export const CreatePortfolioForm = ({ onClose, onSuccess }: CreatePortfolioFormP
 
   return (
     <Dialog open={true} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto glass shadow-card border-0 backdrop-blur-xl">
         <DialogHeader>
-          <DialogTitle>Create New Portfolio</DialogTitle>
+          <DialogTitle className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">Create New Portfolio</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -226,16 +226,16 @@ export const CreatePortfolioForm = ({ onClose, onSuccess }: CreatePortfolioFormP
             />
           </div>
 
-          <div className="flex justify-end space-x-2 pt-4">
-            <Button type="button" variant="outline" onClick={onClose} disabled={loading}>
+          <div className="flex justify-end space-x-2 pt-6 border-t border-border/50">
+            <Button type="button" variant="outline" onClick={onClose} disabled={loading} className="border-border/50 hover:bg-secondary/50">
               Cancel
             </Button>
-            <Button type="submit" disabled={loading}>
+            <Button type="submit" disabled={loading} className="bg-gradient-primary shadow-primary hover:shadow-accent transition-all duration-300 border-0">
               {loading ? (
-                <>
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                <div className="flex items-center gap-2">
+                  <Loader2 className="w-4 h-4 animate-spin" />
                   {generating ? 'Generating Portfolio...' : 'Creating...'}
-                </>
+                </div>
               ) : (
                 'Create Portfolio'
               )}
