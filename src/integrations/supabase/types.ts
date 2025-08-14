@@ -14,7 +14,210 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      portfolio_exports: {
+        Row: {
+          file_size: number | null
+          file_url: string | null
+          format: Database["public"]["Enums"]["export_format"]
+          generated_at: string
+          id: string
+          portfolio_id: string
+        }
+        Insert: {
+          file_size?: number | null
+          file_url?: string | null
+          format: Database["public"]["Enums"]["export_format"]
+          generated_at?: string
+          id?: string
+          portfolio_id: string
+        }
+        Update: {
+          file_size?: number | null
+          file_url?: string | null
+          format?: Database["public"]["Enums"]["export_format"]
+          generated_at?: string
+          id?: string
+          portfolio_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "portfolio_exports_portfolio_id_fkey"
+            columns: ["portfolio_id"]
+            isOneToOne: false
+            referencedRelation: "portfolios"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      portfolio_revisions: {
+        Row: {
+          changes_made: string | null
+          content: Json
+          created_at: string
+          generated_content: Json | null
+          id: string
+          portfolio_id: string
+          revision_number: number
+        }
+        Insert: {
+          changes_made?: string | null
+          content: Json
+          created_at?: string
+          generated_content?: Json | null
+          id?: string
+          portfolio_id: string
+          revision_number: number
+        }
+        Update: {
+          changes_made?: string | null
+          content?: Json
+          created_at?: string
+          generated_content?: Json | null
+          id?: string
+          portfolio_id?: string
+          revision_number?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "portfolio_revisions_portfolio_id_fkey"
+            columns: ["portfolio_id"]
+            isOneToOne: false
+            referencedRelation: "portfolios"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      portfolios: {
+        Row: {
+          ai_prompt: string | null
+          content: Json
+          created_at: string
+          export_urls: Json | null
+          generated_content: Json | null
+          id: string
+          revision_number: number | null
+          status: Database["public"]["Enums"]["portfolio_status"] | null
+          template_id: string | null
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          ai_prompt?: string | null
+          content?: Json
+          created_at?: string
+          export_urls?: Json | null
+          generated_content?: Json | null
+          id?: string
+          revision_number?: number | null
+          status?: Database["public"]["Enums"]["portfolio_status"] | null
+          template_id?: string | null
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          ai_prompt?: string | null
+          content?: Json
+          created_at?: string
+          export_urls?: Json | null
+          generated_content?: Json | null
+          id?: string
+          revision_number?: number | null
+          status?: Database["public"]["Enums"]["portfolio_status"] | null
+          template_id?: string | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "portfolios_template_id_fkey"
+            columns: ["template_id"]
+            isOneToOne: false
+            referencedRelation: "templates"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          bio: string | null
+          created_at: string
+          email: string | null
+          full_name: string | null
+          id: string
+          location: string | null
+          phone: string | null
+          skills: string[] | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          bio?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          location?: string | null
+          phone?: string | null
+          skills?: string[] | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          bio?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          location?: string | null
+          phone?: string | null
+          skills?: string[] | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      templates: {
+        Row: {
+          created_at: string
+          css_styles: string | null
+          description: string | null
+          html_content: string
+          id: string
+          is_active: boolean | null
+          name: string
+          preview_url: string | null
+          type: Database["public"]["Enums"]["template_type"]
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          css_styles?: string | null
+          description?: string | null
+          html_content: string
+          id?: string
+          is_active?: boolean | null
+          name: string
+          preview_url?: string | null
+          type: Database["public"]["Enums"]["template_type"]
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          css_styles?: string | null
+          description?: string | null
+          html_content?: string
+          id?: string
+          is_active?: boolean | null
+          name?: string
+          preview_url?: string | null
+          type?: Database["public"]["Enums"]["template_type"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +226,14 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      export_format: "pdf" | "docx" | "pptx" | "html"
+      portfolio_status: "draft" | "generating" | "completed" | "error"
+      template_type:
+        | "modern"
+        | "classic"
+        | "creative"
+        | "minimal"
+        | "professional"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +360,16 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      export_format: ["pdf", "docx", "pptx", "html"],
+      portfolio_status: ["draft", "generating", "completed", "error"],
+      template_type: [
+        "modern",
+        "classic",
+        "creative",
+        "minimal",
+        "professional",
+      ],
+    },
   },
 } as const
